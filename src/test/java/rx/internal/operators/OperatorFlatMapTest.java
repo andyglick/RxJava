@@ -469,6 +469,7 @@ public class OperatorFlatMapTest {
         }
     }
     @Test(timeout = 30000)
+    @Ignore
     public void flatMapRangeMixedAsyncLoop() {
         for (int i = 0; i < 2000; i++) {
             if (i % 10 == 0) {

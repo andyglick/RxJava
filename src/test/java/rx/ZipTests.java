@@ -114,7 +114,7 @@ public class ZipTests {
         Observable<Object> result = Observable.zip(observables, new FuncN<Object>() {
             @Override
             public Object call(final Object... args) {
-                System.out.println("received: " + args);
+                System.out.println("received: " + args.length + " arguments");
                 assertEquals("No argument should have been passed", 0, args.length);
                 return invoked;
             }

@@ -31,23 +31,15 @@ public class AssertObservableTest {
         AssertObservable.assertObservableEqualsBlocking("foo", null, null);
     }
 
-    @Test
+    @Test(expected = AssertionError.class)
     public void testFailNotNull() {
-        try {
-            AssertObservable.assertObservableEqualsBlocking("foo", Observable.just(1, 2), Observable.just(1));
-            Assert.fail("Failed to throw");
-        } catch (AssertionError expected) {
-            // expected
-        }
+      AssertObservable.assertObservableEqualsBlocking("foo", Observable.just(1, 2), Observable.just(1));
+      Assert.fail("Failed to throw");
     }
 
-    @Test
+    @Test(expected = AssertionError.class)
     public void testFailNull() {
-        try {
-            AssertObservable.assertObservableEqualsBlocking("foo", Observable.just(1, 2), null);
-            Assert.fail("Failed to throw");
-        } catch (AssertionError expected) {
-            // expected
-        }
+      AssertObservable.assertObservableEqualsBlocking("foo", Observable.just(1, 2), null);
+      Assert.fail("Failed to throw");
     }
 }

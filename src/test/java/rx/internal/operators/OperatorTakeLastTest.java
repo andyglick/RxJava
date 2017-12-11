@@ -321,6 +321,7 @@ public class OperatorTakeLastTest {
     }
     
     @Test(timeout = 30000) // original could get into an infinite loop
+    @Ignore
     public void completionRequestRace() {
         Worker w = Schedulers.computation().createWorker();
         try {

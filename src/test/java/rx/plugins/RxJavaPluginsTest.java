@@ -161,10 +161,11 @@ public class RxJavaPluginsTest {
         RxJavaPlugins.getInstance().registerErrorHandler(errorHandler);
 
         RuntimeException re = new RuntimeException("test onError");
+
         try {
             Observable.error(re).subscribe();
             fail("should fail");
-        } catch (Throwable e) {
+        } catch (Exception ignore) {
             // ignore as we expect it to throw
         }
         assertEquals(re, errorHandler.e);

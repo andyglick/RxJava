@@ -304,7 +304,7 @@ public class BlockingObservableTest {
                 }
             });
             fail("we expect an exception to be thrown");
-        } catch (Throwable e) {
+        } catch (Exception e) {
             // do nothing as we expect this
         }
     }

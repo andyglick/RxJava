@@ -218,6 +218,7 @@ public class OperatorMergeMaxConcurrentTest {
         }
     }
     @Test(timeout = 10000)
+    @Ignore
     public void testSimpleOneLessAsyncLoop() {
         int max = 200;
         if (PlatformDependent.isAndroid()) {

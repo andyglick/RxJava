@@ -1907,7 +1907,7 @@ public class CompletableTest {
         try {
             c.await();
             Assert.fail("Did not throw exception");
-        } catch (Throwable e) {
+        } catch (Exception e) {
             // expected
         }
         

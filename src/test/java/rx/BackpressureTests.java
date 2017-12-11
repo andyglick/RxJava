@@ -471,6 +471,7 @@ public class BackpressureTests {
     }
 
     @Test(timeout = 10000)
+    @Ignore
     public void testOnBackpressureDropWithAction() {
         for (int i = 0; i < 100; i++) {
             final AtomicInteger emitCount = new AtomicInteger();

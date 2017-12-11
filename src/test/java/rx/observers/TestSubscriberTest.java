@@ -473,47 +473,35 @@ public class TestSubscriberTest {
         }
     }
     
-    @Test
+    @Test(expected = AssertionError.class)
     public void testNoTerminalEventBut1Completed() {
         TestSubscriber<Integer> ts = TestSubscriber.create();
         
         ts.onCompleted();
-        
-        try {
-            ts.assertNoTerminalEvent();
-            fail("Failed to report there were terminal event(s)!");
-        } catch (AssertionError ex) {
-            // expected
-        }
+
+      ts.assertNoTerminalEvent();
+      fail("Failed to report there were terminal event(s)!");
     }
-    
-    @Test
+
+    @Test(expected = AssertionError.class)
     public void testNoTerminalEventBut1Error() {
         TestSubscriber<Integer> ts = TestSubscriber.create();
         
         ts.onError(new TestException());
-        
-        try {
-            ts.assertNoTerminalEvent();
-            fail("Failed to report there were terminal event(s)!");
-        } catch (AssertionError ex) {
-            // expected
-        }
+
+      ts.assertNoTerminalEvent();
+      fail("Failed to report there were terminal event(s)!");
     }
-    
-    @Test
+
+    @Test(expected = AssertionError.class)
     public void testNoTerminalEventBut1Error1Completed() {
         TestSubscriber<Integer> ts = TestSubscriber.create();
         
         ts.onCompleted();
         ts.onError(new TestException());
-        
-        try {
-            ts.assertNoTerminalEvent();
-            fail("Failed to report there were terminal event(s)!");
-        } catch (AssertionError ex) {
-            // expected
-        }
+
+      ts.assertNoTerminalEvent();
+      fail("Failed to report there were terminal event(s)!");
     }
     
     @Test
@@ -533,32 +521,24 @@ public class TestSubscriberTest {
             }
         }
     }
-    
-    @Test
+
+    @Test(expected = AssertionError.class)
     public void testNoValues() {
         TestSubscriber<Integer> ts = TestSubscriber.create();
         ts.onNext(1);
-        
-        try {
-            ts.assertNoValues();
-            fail("Failed to report there were values!");
-        } catch (AssertionError ex) {
-            // expected
-        }
+
+      ts.assertNoValues();
+      fail("Failed to report there were values!");
     }
-    
-    @Test
+
+    @Test(expected = AssertionError.class)
     public void testValueCount() {
         TestSubscriber<Integer> ts = TestSubscriber.create();
         ts.onNext(1);
         ts.onNext(2);
-        
-        try {
-            ts.assertValueCount(3);
-            fail("Failed to report there were values!");
-        } catch (AssertionError ex) {
-            // expected
-        }
+
+      ts.assertValueCount(3);
+      fail("Failed to report there were values!");
     }
     
     @Test(timeout = 1000)
@@ -770,11 +750,16 @@ public class TestSubscriberTest {
         .subscribe(ts);
         
         Assert.assertFalse(ts.awaitValueCount(5, 1, TimeUnit.SECONDS));
-        
+
     }
     
     @Test
+    @SuppressWarnings("TryFailThrowable")
     public void assertAndConsume() {
+
+        boolean sentinel01 = false;
+        boolean sentinel02 = false;
+
         TestSubscriber<Integer> ts = TestSubscriber.create();
         
         ts.assertNoValues();
@@ -797,18 +782,26 @@ public class TestSubscriberTest {
         
         try {
             ts.assertValuesAndClear(4);
-            Assert.fail("Should have thrown AssertionError");
-        } catch (AssertionError ex) {
+            sentinel01 = true;
+        } catch (AssertionError expected) {
             // expected
+        }
+
+        if (sentinel01) {
+          Assert.fail("Should have thrown AssertionError");
         }
         
         ts.assertValueCount(2);
         
         try {
             ts.assertValuesAndClear(4, 5, 6);
-            Assert.fail("Should have thrown AssertionError");
-        } catch (AssertionError ex) {
+            sentinel02 = true;
+        } catch (AssertionError expected) {
             // expected
+        }
+
+        if (sentinel02) {
+            Assert.fail("Should have thrown AssertionError");
         }
         
         ts.assertValuesAndClear(4, 5);

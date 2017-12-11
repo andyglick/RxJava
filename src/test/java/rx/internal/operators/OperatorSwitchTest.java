@@ -885,6 +885,7 @@ public class OperatorSwitchTest {
     }
     
     @Test
+    @Ignore
     public void asyncInner() throws Throwable {
         for (int i = 0; i < 100; i++) {
             
